@@ -1,0 +1,47 @@
+# Query: localhost:3000
+# ContextLines: 1
+
+https://tubular-gumption-4305d6.netlify.app/https://tubular-gumption-4305d6.netlify.app/10 results - 3 files
+
+frontend/src/store/slices/applicationSlice.js:
+   87      const response = await axios.get(
+   88:       `http://localhost:3000/api/v1/application/employer/getall`,
+   89        {
+
+  111      const response = await axios.get(
+  112:       `http://localhost:3000/api/v1/application/jobseeker/getall`,
+  113        {
+
+  135      const response = await axios.post(
+  136:       `http://localhost:3000/api/v1/application/post/${jobId}`,
+  137        data,
+
+  159      const response = await axios.delete(
+  160:       `http://localhost:3000/api/v1/application/delete/${id}`,
+  161        { withCredentials: true }
+
+frontend/src/store/slices/updateProfileSlice.js:
+  49      const response = await axios.put(
+  50:       "http://localhost:3000/api/v1/users/update/profile",
+  51        data,
+
+  69      const response = await axios.put(
+  70:       "http://localhost:3000/api/v1/users/update/password",
+  71        data,
+
+frontend/src/store/slices/userSlice.js:
+   94      const response = await axios.post(
+   95:       "http://localhost:3000/api/v1/users/register",
+   96        data,
+
+  112      const response = await axios.post(
+  113:       "http://localhost:3000/api/v1/users/login",
+  114        data,
+
+  130      const response = await axios.get(
+  131:       "http://localhost:3000/api/v1/users/getuser",
+  132        {
+
+  144      const response = await axios.get(
+  145:       "http://localhost:3000/api/v1/users/logout",
+  146        {

@@ -528,7 +528,7 @@ footer div ul a span {
   justify-content: center;
   background: #fff;
   max-width: 1500px;
-  padding-inline: 250px;
+  /* padding-inline: 250px; */
 }
 .authPage .login-container {
   max-width: 620px;

@@ -105,7 +105,6 @@ const UpdatePassword = () => {
         <button
           className="btn"
           onClick={handleUpdatePassword}
-          disabled={loading}
         >
           Update Password
         </button>

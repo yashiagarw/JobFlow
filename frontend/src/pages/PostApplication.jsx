@@ -146,7 +146,6 @@ const PostApplication = () => {
               <button
                 className="btn"
                 onClick={handlePostApplication}
-                disabled={loading}
               >
                 Apply
               </button>

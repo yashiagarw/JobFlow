@@ -252,14 +252,11 @@ const JobPost = () => {
         <button
           style={{ margin: "0 auto" }}
           className="btn"
-          onClick={handlePostJob}
-          disabled={loading}
-        >
+          onClick={handlePostJob}>
           Post Job
         </button>
       </div>
     </div>
   );
 };
-
 export default JobPost;

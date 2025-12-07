@@ -204,7 +204,6 @@ const UpdateProfile = () => {
         <button
           className="btn"
           onClick={handleUpdateProfile}
-          disabled={loading}
         >
           {" "}
           Save Changes

@@ -81,6 +81,7 @@ const MyJobs = () => {
                   <button
                     className="btn"
                     onClick={() => handleDeleteJob(element._id)}
+
                   >
                     Delete Job
                   </button>

@@ -81,7 +81,7 @@ const Login = () => {
                 <RiLock2Fill />
               </div>
             </div>
-            <button type="submit" disabled={loading}>
+            <button type="submit">
               Login
             </button>
             <Link to={"/register"}>Register Now</Link>
