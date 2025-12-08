@@ -12,15 +12,10 @@
     {
       "source": "/api/(.*)",
       "destination": "/backend/index.js"
-    }
-  ],
-  "routes": [
-    {
-      "handle": "filesystem"
     },
     {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
