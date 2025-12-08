@@ -12,7 +12,17 @@ import applicationRouter from "./routes/applicationRouter.js";
 import {newsLetterCron} from './automation/newsLetterCron.js';
 
 const app = express();
-config({path:"./config/config.env"})
+
+// Load environment variables
+// In Vercel, environment variables are already set, so we only load from file in local development
+// Try to load from config file, but don't fail if it doesn't exist (production)
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+    try {
+        config({path:"./config/config.env"});
+    } catch (error) {
+        console.log("Config file not found, using environment variables from Vercel");
+    }
+}
 
 // CORS configuration
 // When frontend and backend are on the same domain, CORS doesn't apply (same-origin)
@@ -68,7 +78,14 @@ app.use("/api/v1/job",jobRouter);  //job routes
 app.use("/api/v1/application", applicationRouter); //application routes
 
 // Initialize database connection
-connection(); //database connection
+// Only connect if MONGO_URI is available
+if (process.env.MONGO_URI) {
+    connection().catch(err => {
+        console.error("Database connection error:", err.message);
+    });
+} else {
+    console.error("MONGO_URI environment variable is not set!");
+}
 
 // Only run cron jobs in non-serverless environments
 // Cron jobs don't work in serverless functions (they need a persistent process)
