@@ -29,7 +29,16 @@ app.use(fileUpload({
 app.use("/api/v1/users",userRouter);//user routes
 app.use("/api/v1/job",jobRouter);  //job routes
 app.use("/api/v1/application", applicationRouter); //application routes
-newsLetterCron();
+
+// Initialize database connection
 connection(); //database connection
+
+// Only run cron jobs in non-serverless environments
+// Cron jobs don't work in serverless functions (they need a persistent process)
+// For serverless, use Vercel Cron Jobs or external cron service instead
+if (process.env.VERCEL !== '1') {
+  newsLetterCron();
+}
+
 app.use(errorMiddleware);
 export default app;
