@@ -109,13 +109,12 @@ export const fetchJobs =
   async (dispatch) => {
     try {
       dispatch(jobSlice.actions.requestForAllJobs());
-      let link = `${API_ENDPOINTS.GET_ALL_JOBS}?`;
       let queryParams = [];
       if (searchKeyword) {
-        queryParams.push(`searchKeyword=${searchKeyword}`);
+        queryParams.push(`searchKeyword=${encodeURIComponent(searchKeyword)}`);
       }
       if (city && city !== "All") {
-        queryParams.push(`city=${city}`);
+        queryParams.push(`city=${encodeURIComponent(city)}`);
       }
 
       /***************************************************/
@@ -123,13 +122,13 @@ export const fetchJobs =
       if (city && city === "All") {
         queryParams = [];
         if (searchKeyword) {
-          queryParams.push(`searchKeyword=${searchKeyword}`);
+          queryParams.push(`searchKeyword=${encodeURIComponent(searchKeyword)}`);
         }
       }
       /***************************************************/
 
-      if (niche) {
-        queryParams.push(`niche=${niche}`);
+      if (niche && niche !== "All") {
+        queryParams.push(`niche=${encodeURIComponent(niche)}`);
       }
 
       /***************************************************/
@@ -137,15 +136,19 @@ export const fetchJobs =
       if (niche && niche === "All") {
         queryParams = [];
         if (searchKeyword) {
-          queryParams.push(`searchKeyword=${searchKeyword}`);
+          queryParams.push(`searchKeyword=${encodeURIComponent(searchKeyword)}`);
         }
         if (city && city !== "All") {
-          queryParams.push(`city=${city}`);
+          queryParams.push(`city=${encodeURIComponent(city)}`);
         }
       }
       /***************************************************/
 
-      link += queryParams.join("&");
+      // Build URL with query params only if they exist
+      const link = queryParams.length > 0 
+        ? `${API_ENDPOINTS.GET_ALL_JOBS}?${queryParams.join("&")}`
+        : API_ENDPOINTS.GET_ALL_JOBS;
+      
       const response = await axios.get(link, { withCredentials: true });
       dispatch(jobSlice.actions.successForAllJobs(response.data.jobs));
       dispatch(jobSlice.actions.clearAllErrors());

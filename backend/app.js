@@ -15,7 +15,9 @@ const app = express();
 config({path:"./config/config.env"})
 
 app.use(cros({
-    origin:[process.env.FRONTEND_URL], //url of frontend
+    origin: process.env.FRONTEND_URL ? 
+      process.env.FRONTEND_URL.split(',').map(url => url.trim()) : 
+      ['http://localhost:5173', 'https://job-flow.vercel.app'], // Allow both local and production frontend
     methods:["GET","POST","PUT","DELETE"],
     credentials:true,
 })); //app.use means we r using cros as a middleware 
