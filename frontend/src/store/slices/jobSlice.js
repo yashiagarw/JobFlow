@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { API_ENDPOINTS } from "../../config/api.js";
 
 const jobSlice = createSlice({
   name: "jobs",
@@ -108,7 +109,7 @@ export const fetchJobs =
   async (dispatch) => {
     try {
       dispatch(jobSlice.actions.requestForAllJobs());
-      let link = "http://localhost:3000/api/v1/job/getall?";
+      let link = `${API_ENDPOINTS.GET_ALL_JOBS}?`;
       let queryParams = [];
       if (searchKeyword) {
         queryParams.push(`searchKeyword=${searchKeyword}`);
@@ -158,7 +159,7 @@ export const fetchSingleJob = (jobId) => async (dispatch) => {
   dispatch(jobSlice.actions.requestForSingleJob());
   try {
     const response = await axios.get(
-      `http://localhost:3000/api/v1/job/get/${jobId}`,
+      API_ENDPOINTS.GET_SINGLE_JOB(jobId),
       { withCredentials: true }
     );
     dispatch(jobSlice.actions.successForSingleJob(response.data.job));
@@ -172,7 +173,7 @@ export const postJob = (data) => async (dispatch) => {
   dispatch(jobSlice.actions.requestForPostJob());
   try {
     const response = await axios.post(
-      `http://localhost:3000/api/v1/job/post`,
+      API_ENDPOINTS.POST_JOB,
       data,
       { withCredentials: true, headers: { "Content-Type": "application/json" } }
     );
@@ -187,7 +188,7 @@ export const getMyJobs = () => async (dispatch) => {
   dispatch(jobSlice.actions.requestForMyJobs());
   try {
     const response = await axios.get(
-      `http://localhost:3000/api/v1/job/getmyjobs`,
+      API_ENDPOINTS.GET_MY_JOBS,
       { withCredentials: true }
     );
     dispatch(jobSlice.actions.successForMyJobs(response.data.myJobs));
@@ -201,7 +202,7 @@ export const deleteJob = (id) => async (dispatch) => {
   dispatch(jobSlice.actions.requestForDeleteJob());
   try {
     const response = await axios.delete(
-      `http://localhost:3000/api/v1/job/delete/${id}`,
+      API_ENDPOINTS.DELETE_JOB(id),
       { withCredentials: true }
     );
     dispatch(jobSlice.actions.successForDeleteJob(response.data.message));
