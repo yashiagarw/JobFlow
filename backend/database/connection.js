@@ -26,8 +26,6 @@ export const connection = async () => {
             socketTimeoutMS: 45000, // Close sockets after 45s of inactivity
             // Serverless-friendly options
             maxPoolSize: 1, // Limit connections in serverless
-            bufferCommands: false, // Disable mongoose buffering
-            bufferMaxEntries: 0, // Disable mongoose buffering
         });
         
         cachedConnection = conn;
