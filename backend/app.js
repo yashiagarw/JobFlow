@@ -2,6 +2,7 @@ import express from 'express';
 import {config} from "dotenv";
 import cros from 'cors';
 import cookieParser from 'cookie-parser';
+import mongoose from 'mongoose';
 import {connection} from "./database/connection.js";
 import {errorMiddleware}  from './middlewares/error.js';
 import fileUpload from 'express-fileupload';
@@ -26,6 +27,21 @@ app.use(fileUpload({
     useTempFiles:true,
     tempFileDir:"/tmp/",
 })); //file upload
+
+// Home route - shows server status
+app.get("/", (req, res) => {
+    const dbStatus = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
+    
+    res.status(200).json({
+        success: true,
+        message: "Server is running successfully! 🚀",
+        status: "connected",
+        database: dbStatus,
+        timestamp: new Date().toISOString(),
+        environment: process.env.NODE_ENV || 'development'
+    });
+});
+
 app.use("/api/v1/users",userRouter);//user routes
 app.use("/api/v1/job",jobRouter);  //job routes
 app.use("/api/v1/application", applicationRouter); //application routes
