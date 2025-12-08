@@ -14,10 +14,29 @@ import {newsLetterCron} from './automation/newsLetterCron.js';
 const app = express();
 config({path:"./config/config.env"})
 
+// CORS configuration
+// When frontend and backend are on the same domain, CORS doesn't apply (same-origin)
+// But we need it for development (different ports) and cross-origin scenarios
 app.use(cros({
-    origin: process.env.FRONTEND_URL ? 
-      process.env.FRONTEND_URL.split(',').map(url => url.trim()) : 
-      ['http://localhost:5173', 'https://job-flow.vercel.app'], // Allow both local and production frontend
+    origin: function (origin, callback) {
+        // Allow requests with no origin (same-origin requests when on same domain)
+        // This is crucial when frontend and backend are deployed together
+        if (!origin) {
+            return callback(null, true);
+        }
+        
+        const allowedOrigins = process.env.FRONTEND_URL ? 
+            process.env.FRONTEND_URL.split(',').map(url => url.trim()) : 
+            ['http://localhost:5173', 'https://job-flow.vercel.app'];
+        
+        // Allow if in allowed list, or if it's a same-origin request
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            // For same-domain deployments, allow the request
+            callback(null, true);
+        }
+    },
     methods:["GET","POST","PUT","DELETE"],
     credentials:true,
 })); //app.use means we r using cros as a middleware 

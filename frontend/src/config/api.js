@@ -2,10 +2,10 @@
 // This file centralizes all backend API URLs
 // Use environment variables for different environments (local, production)
 
-// In production (Vercel), use the environment variable or fallback to deployed backend URL
+// In production (Vercel), frontend and backend are on the same domain, so use relative URLs
 // In development, use localhost
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 
-  (import.meta.env.PROD ? 'https://job-flow-backend-nine.vercel.app' : 'http://localhost:3000');
+  (import.meta.env.PROD ? '' : 'http://localhost:3000');
 
 export const API_ENDPOINTS = {
   // User endpoints
